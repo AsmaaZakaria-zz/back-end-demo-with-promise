@@ -1,0 +1,22 @@
+{
+  "name": "endpoint",
+  "version": "1.0.0",
+  "description": "orders app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zaynabm/ComamosBlue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zaynabm/ComamosBlue/issues"
+  },
+  "homepage": "https://github.com/zaynabm/ComamosBlue#readme",
+  "dependencies": {
+    "mongoose": "^4.10.5"
+  }
+}
