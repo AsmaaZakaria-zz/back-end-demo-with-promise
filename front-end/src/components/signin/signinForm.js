@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {browserHistory} from "react-router";
 
 import "../../style/index.css";
 
@@ -9,12 +10,21 @@ export class SigninForm extends Component{
       username : "",
       password: ""
     }
+    this.onChange = this.onChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  onChange (event){
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
 
-  handleSubmit = (event) => {
+  handleSubmit (event) {
     event.preventDefault();
-    console.log("hello ", this.state.username);
+    console.log("hello ", this.state);
+    // browserHistory.push("/home")
+    this.context.router.push("/home")
   }
 
   handleEmptySubmit = (event) => {
@@ -27,7 +37,7 @@ export class SigninForm extends Component{
   render(){
     const submitHandler = this.state.username ? this.handleSubmit : this.handleEmptySubmit
     return(
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={submitHandler}>
         <h1>Welcome !!!</h1>
 
         <div className="form-group">
@@ -50,4 +60,8 @@ export class SigninForm extends Component{
 SigninForm.propTypes = {
   username: React.PropTypes.string.isRequired,
   password: React.PropTypes.string.isRequired
+}
+
+SigninForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
