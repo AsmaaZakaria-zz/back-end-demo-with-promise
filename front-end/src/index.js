@@ -1,28 +1,28 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
+import {Router, Route, browserHistory, IndexRoute} from "react-router";
+// import { createBrowserHistory } from 'history'
 
+import {App} from "./components/App.js";
+import {Signup} from "./components/signup/signupPage.js";
+import {Signin} from "./components/signin/signinPage.js";
+import {Home} from "./components/home/home.js";
 
-import './index.css';
-import {Login} from "./login.js"
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-
-
-        <Login />
-
-      </div>
-    );
+class Routers extends Component{
+  render(){
+    return(
+      <Router history={browserHistory}>
+        <Route path={"/"} component={App}>
+          <IndexRoute component={Signin}/>
+          <Route path={"/signup"} component={Signup}></Route>
+          <Route path={"/home"} component={Home}></Route>
+        </Route>
+      </Router>
+    )
   }
 }
 
 ReactDOM.render(
-  <App />,
+  <Routers />,
   document.getElementById('root')
 );
