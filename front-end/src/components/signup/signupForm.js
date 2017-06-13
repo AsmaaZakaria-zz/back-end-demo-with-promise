@@ -1,5 +1,8 @@
 import React,{Component} from 'react';
 import {createUser} from "../../lib/services.js";
+import classnames from "classnames";
+import validateInput from "../../validations/signup.js";
+import TextFieldGroup from "../../common/textFieldGroup.js";
 
 import "../../style/index.css";
 
@@ -10,7 +13,8 @@ export class SignupForm extends Component{
       username: "",
       password: "",
       phone: "",
-      address: ""
+      address: "",
+      errors: {}
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -23,38 +27,69 @@ export class SignupForm extends Component{
     })
   }
 
+  isValid() {
+    const { errors, isValid } = validateInput(this.state);
+    if (!isValid) {
+      this.setState({ errors });
+    }
+    return isValid;
+  }
+
   onSubmit(event){
     event.preventDefault()
-    console.log("user info --> ", this.state);
-    const newUser = {username: this.state.username, password: this.state.password, phone: this.state.phone, address: this.state.address}
-    createUser(newUser)
-      .then(() => {
-        console.log("=== create new user  === ",  newUser );
-        this.context.router.push("/home")
-      })
+    if (this.isValid()){
+      this.setState({errors: {}});
+      console.log("user info --> ", this.state);
+      const newUser = {username: this.state.username, password: this.state.password, phone: this.state.phone, address: this.state.address}
+      createUser(newUser)
+        .then(() => {
+          console.log("=== create new user  === ",  newUser );
+          this.context.router.push("/home")
+        },
+        (err) => this.setState({ errors: err.response.data})
+      )
+    }
   }
 
   render(){
+    const {errors} = this.state;
     return(
       <form onSubmit={this.onSubmit}>
         <h1>Join Us !!!</h1>
 
-        <div className="form-group">
-          <label className="control-label">Username</label>
-          <input type="text" name="username" value={this.state.username} onChange={this.onChange} className="form-control"/>
-        </div>
-        <div className="form-group">
-          <label className="control-label">Password</label>
-          <input type="password" name="password" value={this.state.password} onChange={this.onChange} className="form-control"/>
-        </div>
-        <div className="form-group">
-          <label className="control-label">Phone</label>
-          <input type="number" name="phone" value={this.state.phone} onChange={this.onChange} className="form-control"/>
-        </div>
-        <div className="form-group">
-          <label className="control-label">Address</label>
-          <input type="text" name="address" value={this.state.address} onChange={this.onChange} className="form-control"/>
-        </div>
+        <TextFieldGroup
+          error={errors.username}
+          label="Username"
+          onChange={this.onChange}
+          value={this.state.username}
+          field="username"
+        />
+
+        <TextFieldGroup
+          error={errors.password}
+          label="Password"
+          onChange={this.onChange}
+          value={this.state.password}
+          field="password"
+        />
+
+        <TextFieldGroup
+          error={errors.phone}
+          label="Phone"
+          onChange={this.onChange}
+          value={this.state.phone}
+          field="phone"
+        />
+
+        <TextFieldGroup
+          error={errors.address}
+          label="Address"
+          onChange={this.onChange}
+          value={this.state.address}
+          field="address"
+        />
+
+
         <button type="submit" className="btn btn-primary btn-lg">Sign Up</button>
       </form>
     )
