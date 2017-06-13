@@ -3,7 +3,7 @@ import {addOrder} from "../../lib/services.js";
 
 import "../../style/index.css";
 
-var items;
+var items = [];
 
 export class AddOrders extends Component{
 
@@ -26,15 +26,12 @@ export class AddOrders extends Component{
 
 
 
-  onAddItem = (event) => {
+  handleAdd = () => {
     console.log("=== onAddItem ===");
-    items = [];
-    var itemname = event.target.name;
-    var itemquant = event.target.quant;
-    console.log("=== itemname === ", itemname);
-    items.push(itemname, itemquant);
-    this.setState({items})
-    console.log("=== items after push === ", items);
+    items = this.state.itemsList.concat(event.target.name);
+    console.log("=== items before setState === ", items);
+    this.setState({itemsList: items})
+    console.log("=== items after setState === ", items);
     return items;
   }
 
@@ -42,7 +39,7 @@ export class AddOrders extends Component{
     event.preventDefault();
     console.log("order info --> ", this.state);
 
-    var allItems = this.onAddItem()
+    var allItems = this.handleAdd()
     console.log("=== All items === ", allItems);
 
     const newOrder = {owner:this.state.owner,
@@ -78,7 +75,7 @@ export class AddOrders extends Component{
           <label className="control-label">Items</label>
           <input type="text" name="name" value={this.state.name} onChange={this.onChange} className="form-control" placeholder="name..."/>
           <input type="number" name="quant" value={this.state.quant} onChange={this.onChange} className="form-control" placeholder="quantity..."/>
-          <button type="button" onClick={this.onAddItem} className="btn btn-primary btn-lg">Add Item</button>
+          <button type="button" onClick={this.handleAdd} className="btn btn-primary btn-lg">Add Item</button>
         </div>
 
         <button type="submit" className="btn btn-primary btn-lg">Add Order</button>

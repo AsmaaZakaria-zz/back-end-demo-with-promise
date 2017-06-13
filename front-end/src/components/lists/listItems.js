@@ -1,12 +1,22 @@
 import React,{Component} from 'react';
-import JsonTable from "react-json-table"
 import {list} from "../../lib/services.js";
 import "../../style/index.css";
 
 export class ListItems extends Component{
 
   state = {
-    items: []
+    items: [
+      {
+					"itemname": "James Angus",
+					"price" : "22",
+					"quantity": "Dentist"
+				},
+				{
+					"itemname": "Milan Howen",
+					"price" : "36",
+					"quantity": "Truck Driver"
+				}
+    ]
   }
 
   componentDidMount (){
@@ -26,10 +36,27 @@ export class ListItems extends Component{
   }
 
   render(){
+    var rows = this.state.items.map(function(row){
+			 return <tr>
+					 <td>{row.itemname}</td>
+					 <td>{row.price}</td>
+					 <td>{row.quantity}</td>
+				 </tr>
+			 });
+
     return(
       <div className="container list-items">
         <h2>Items</h2>
-        <JsonTable rows={this.state.items} />
+        <div>
+        <table className="table table-striped">
+          <thead>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </thead>
+          {rows}
+        </table>
+        </div>
         <button type="button" onClick={this.onChange} className="btn btn-primary btn-lg">Add Item</button>
       </div>
     )
