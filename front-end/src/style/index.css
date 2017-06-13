@@ -7,3 +7,16 @@ body {
 .form-control{
   width: 20%
 }
+
+.signup-sigin{
+  display: flex;
+}
+
+.list-orders{
+  width: 35%;
+}
+
+.home{
+  display:flex;
+  flex-direction:row;
+}

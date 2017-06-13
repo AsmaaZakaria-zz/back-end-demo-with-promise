@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {browserHistory} from "react-router";
 import {createUser} from "../../lib/services.js";
 
 import "../../style/index.css";
@@ -31,7 +30,7 @@ export class SignupForm extends Component{
     createUser(newUser)
       .then(() => {
         console.log("=== create new user  === ",  newUser );
-        browserHistory.push("/home");
+        this.context.router.push("/home")
       })
   }
 
@@ -44,23 +43,19 @@ export class SignupForm extends Component{
           <label className="control-label">Username</label>
           <input type="text" name="username" value={this.state.username} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
         <div className="form-group">
           <label className="control-label">Password</label>
           <input type="password" name="password" value={this.state.password} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
         <div className="form-group">
           <label className="control-label">Phone</label>
-          <input type="text" name="phone" value={this.state.phone} onChange={this.onChange} className="form-control"/>
+          <input type="number" name="phone" value={this.state.phone} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
         <div className="form-group">
           <label className="control-label">Address</label>
           <input type="text" name="address" value={this.state.address} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
-        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+        <button type="submit" className="btn btn-primary btn-lg">Sign Up</button>
       </form>
     )
   }
@@ -72,4 +67,8 @@ SignupForm.propTypes = {
   password: React.PropTypes.string.isRequired,
   phone: React.PropTypes.string.isRequired,
   address: React.PropTypes.string.isRequired,
+}
+
+SignupForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }

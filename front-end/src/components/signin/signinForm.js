@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {browserHistory} from "react-router";
+import {loginUser} from "../../lib/services.js";
 
 import "../../style/index.css";
 
@@ -23,8 +23,12 @@ export class SigninForm extends Component{
   handleSubmit (event) {
     event.preventDefault();
     console.log("hello ", this.state);
-    // browserHistory.push("/home")
-    this.context.router.push("/home")
+    const newUser = {username: this.state.username, password: this.state.password}
+    loginUser(newUser)
+      .then(() => {
+        console.log("=== login user  === ",  newUser );
+        this.context.router.push("/home")
+      })
   }
 
   handleEmptySubmit = (event) => {
@@ -44,13 +48,11 @@ export class SigninForm extends Component{
           <label className="control-label">Username</label>
           <input type="text" name="username" value={this.state.username} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
         <div className="form-group">
           <label className="control-label">Password</label>
           <input type="password" name="password" value={this.state.password} onChange={this.onChange} className="form-control"/>
         </div>
-        <br/>
-        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+        <button type="submit" className="btn btn-primary btn-lg">Log In</button>
       </form>
     )
   }
