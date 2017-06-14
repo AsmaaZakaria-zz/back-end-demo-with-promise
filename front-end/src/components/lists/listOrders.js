@@ -27,15 +27,21 @@ export class ListOrders extends Component {
 
 
   render(){
-		var rows = this.state.orders.map(function(row){
+		var {orders} = this.state;
+		var rows = orders.map(function(row){
 			 return <tr>
 					 <td>{row.state}</td>
 					 <td>{row.owner}</td>
-					 <td>{row.itemsList[0]["name"]}</td>
-					 <td>{row.itemsList[0]["quant"]}</td>
+					 <td>{loopItems(row.itemsList)}</td>
 				 </tr>
 			 });
-
+		function loopItems (item){
+			var content="";
+			for(var i=0; i<item.length; i++){
+				content+=item[i]["name"]+":"+item[i]["quant"]+" | "
+			}
+			return content
+		}
     return(
       <div className="container">
         <h2>Orders</h2>
@@ -44,8 +50,7 @@ export class ListOrders extends Component {
           <thead>
             <th>State</th>
 						<th>Owner</th>
-						<th>Name</th>
-						<th>Quantity</th>
+						<th>Name : Quantity</th>
           </thead>
           {rows}
         </table>

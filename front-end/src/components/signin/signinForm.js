@@ -12,7 +12,8 @@ export class SigninForm extends Component{
     this.state = {
       username : "",
       password: "",
-      errors: {}
+      errors: {},
+      msg: ""
     }
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,9 +40,13 @@ export class SigninForm extends Component{
       console.log("hello ", this.state);
       const logUser = {username: this.state.username, password: this.state.password}
       loginUser(logUser)
-        .then(() => {
+        .then((res) => {
           console.log("=== login user  === ",  logUser );
-          this.context.router.push("/home")
+          if(res === true){
+            this.context.router.push("/home")
+          }else{
+            this.setState({msg: "check your info !!!"})
+          }
         },
         (err) => this.setState({ errors: err.response.data})
       )
@@ -53,6 +58,7 @@ export class SigninForm extends Component{
   render(){
     const {errors} = this.state;
     return(
+      <div>
       <form onSubmit={this.handleSubmit}>
         <h1>Welcome !!!</h1>
 
@@ -72,11 +78,12 @@ export class SigninForm extends Component{
           onChange={this.onChange}
           value={this.state.password}
           field="password"
+          type="password"
         />
-
-
         <button type="submit" className="btn btn-primary btn-lg">Log In</button>
       </form>
+      <p>{this.state.msg}</p>
+      </div>
     )
   }
 }

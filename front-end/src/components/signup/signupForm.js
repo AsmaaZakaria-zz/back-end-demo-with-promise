@@ -18,7 +18,6 @@ export class SignupForm extends Component{
     }
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
   }
 
   onChange (event){
@@ -40,7 +39,10 @@ export class SignupForm extends Component{
     if (this.isValid()){
       this.setState({errors: {}});
       console.log("user info --> ", this.state);
-      const newUser = {username: this.state.username, password: this.state.password, phone: this.state.phone, address: this.state.address}
+      const newUser = {username: this.state.username,
+                      password: this.state.password,
+                      phone: this.state.phone,
+                      address: this.state.address}
       createUser(newUser)
         .then(() => {
           console.log("=== create new user  === ",  newUser );
@@ -71,6 +73,7 @@ export class SignupForm extends Component{
           onChange={this.onChange}
           value={this.state.password}
           field="password"
+          type="password"
         />
 
         <TextFieldGroup

@@ -24,7 +24,10 @@ export const loginUser = (user) => {
     body: JSON.stringify(user)
   }).then(res => {
     console.log("=== loginUser method === ", res);
-    res.json();
+    return res.json();
+  }).then((res) => {
+    console.log("=== login user promise === ", res.msg);
+    return res.msg
   })
 }
 
@@ -50,7 +53,7 @@ export const addOrder = (order) => {
   }).then(res => {
     console.log("=== add order res === ", res);
     return res.json();
-  }).then((ress) => {console.log("=== promise === ", ress.msg)
+  }).then((ress) => {console.log("=== add order promise === ", ress.msg)
     return ress.msg
   })
 }
