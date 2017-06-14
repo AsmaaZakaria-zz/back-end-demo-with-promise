@@ -48,8 +48,10 @@ export const addOrder = (order) => {
     },
     body: JSON.stringify(order)
   }).then(res => {
-    console.log("=== add order action === ", res);
-    res.json();
+    console.log("=== add order res === ", res);
+    return res.json();
+  }).then((ress) => {console.log("=== promise === ", ress.msg)
+    return ress.msg
   })
 }
 

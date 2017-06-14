@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Link} from "react-router";
 import {addItems} from "../../lib/services.js";
 
 export class AddItems extends Component{
@@ -30,6 +31,11 @@ export class AddItems extends Component{
 
   render(){
     return(
+      <div>
+      <div>
+        <Link to={"/home"}>List Items</Link><br/>
+        <Link to={"/addOrders"}>Add Orders</Link>
+      </div>
       <form onSubmit={this.onSubmit}>
         <h1>Add New Item</h1>
 
@@ -47,6 +53,7 @@ export class AddItems extends Component{
         </div>
         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
       </form>
+      </div>
     )
   }
 }

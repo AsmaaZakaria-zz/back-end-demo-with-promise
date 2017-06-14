@@ -5,18 +5,7 @@ import "../../style/index.css";
 export class ListItems extends Component{
 
   state = {
-    items: [
-      {
-					"itemname": "James Angus",
-					"price" : "22",
-					"quantity": "Dentist"
-				},
-				{
-					"itemname": "Milan Howen",
-					"price" : "36",
-					"quantity": "Truck Driver"
-				}
-    ]
+    items: []
   }
 
   componentDidMount (){

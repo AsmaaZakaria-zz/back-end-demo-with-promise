@@ -6,16 +6,7 @@ import "../../style/index.css";
 export class ListOrders extends Component {
 
 	state = {
-		orders : [
-			{
-					"status": "James Angus",
-					"items": "Dentist"
-				},
-				{
-					"status": "Milan Howen",
-					"items": "Truck Driver"
-				}
-		]
+		orders : []
 	}
 
   componentDidMount (){
@@ -38,18 +29,23 @@ export class ListOrders extends Component {
   render(){
 		var rows = this.state.orders.map(function(row){
 			 return <tr>
-					 <td>{row.status}</td>
-					 <td>{row.items}</td>
+					 <td>{row.state}</td>
+					 <td>{row.owner}</td>
+					 <td>{row.itemsList[0]["name"]}</td>
+					 <td>{row.itemsList[0]["quant"]}</td>
 				 </tr>
 			 });
+
     return(
       <div className="container">
         <h2>Orders</h2>
 				<div>
         <table className="table table-hover">
           <thead>
-            <th>Name</th>
-            <th>Price</th>
+            <th>State</th>
+						<th>Owner</th>
+						<th>Name</th>
+						<th>Quantity</th>
           </thead>
           {rows}
         </table>
@@ -58,6 +54,10 @@ export class ListOrders extends Component {
       </div>
     )
   }
+}
+
+ListOrders.propTypes = {
+  orders: React.PropTypes.array.isRequired
 }
 
 
