@@ -26,13 +26,17 @@ export class AddOrders extends Component{
 
 
 
-  handleAdd = () => {
+  handleAdd = (e) => {
+    const {itemsList} = this.state;
     console.log("=== onAddItem ===");
-    items = this.state.itemsList.concat(event.target.name);
-    console.log("=== items before setState === ", items);
-    this.setState({itemsList: items})
-    console.log("=== items after setState === ", items);
-    return items;
+    var name = this.refs.itemName.value;
+    var quantity = this.refs.itemQuantity.value;
+    console.log("=== itemName === ", name);
+    console.log("=== itemQuantity === ", quantity);
+    itemsList.push({name: name, quant: quantity});
+    this.setState({itemsList})
+    console.log("=== items after setState === ", itemsList);
+    return itemsList;
   }
 
   onSubmit = (event) => {
@@ -44,7 +48,7 @@ export class AddOrders extends Component{
 
     const newOrder = {owner:this.state.owner,
                       state: this.state.state,
-                      itemsList: allItems,
+                      itemsList: allItems
                     }
     console.log("=== new order === ", newOrder);
     console.log("=== itemsList === ", this.state.itemsList);
@@ -73,8 +77,22 @@ export class AddOrders extends Component{
         </div>
         <div className="form-group">
           <label className="control-label">Items</label>
-          <input type="text" name="name" value={this.state.name} onChange={this.onChange} className="form-control" placeholder="name..."/>
-          <input type="number" name="quant" value={this.state.quant} onChange={this.onChange} className="form-control" placeholder="quantity..."/>
+          <input type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                className="form-control"
+                placeholder="name..."
+                ref="itemName"
+          />
+          <input type="number"
+                name="quant"
+                value={this.state.quant}
+                onChange={this.onChange}
+                className="form-control"
+                placeholder="quantity..."
+                ref="itemQuantity"
+          />
           <button type="button" onClick={this.handleAdd} className="btn btn-primary btn-lg">Add Item</button>
         </div>
 

@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React from "react";
 import classnames from 'classnames';
 
 const TextFieldGroup =  ({field, value, label, error, type, onChange}) => {

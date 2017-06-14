@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import { InputTagsContainer } from 'react-input-tags';
 import {addItems} from "../../lib/services.js";
 
 export class AddItems extends Component{
