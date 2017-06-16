@@ -1,4 +1,6 @@
-const baseUrl = "http://192.168.10.154:8090";
+// const baseUrl = "http://192.168.10.154:8090";
+const baseUrl = "http://localhost:8090";
+
 
 export const createUser = (user) => {
   return fetch (`${baseUrl}/signup`, {

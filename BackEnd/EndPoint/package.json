@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/zaynabm/ComamosBlue#readme",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "mongoose": "^4.10.5"
   }
 }

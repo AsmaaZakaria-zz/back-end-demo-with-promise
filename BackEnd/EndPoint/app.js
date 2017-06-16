@@ -36,10 +36,15 @@ router.post('/signin', function(req, resp) {
     var password=req.body.password;
     console.log("req.body: ",username,password);
     if ((username.replace(/\s/g,"").length > 0) &&(password.replace(/\s/g,"").length>0)) {
-        var isCorrectSignedin=logic.checkSignin(username,password)
-        console.log('is Correct Signed In: ',isCorrectSignedin);
-        resp.json({msg:isCorrectSignedin})
-    }else{
+        logic.checkSignin(username, password)
+          .then((flag) => {
+            console.log("checkSignin then ---> ", flag);
+            resp.json({msg: flag})
+          })
+          .catch((err) => {
+            console.log("checkSignin catch --> ", err);
+          })
+    } else {
         resp.json({msg:"ERROR: EMPTY INPUT"})
         console.log("ERROR: Empty Input");
     }
@@ -53,10 +58,14 @@ router.post('/signup',function(req,resp){
     var address=req.body.address;
     // if(username==""||password==""||)
     if ((username.replace(/\s/g,"").length > 0) &&(password.replace(/\s/g,"").length>0)&&(phone!=null) &&(address.replace(/\s/g,"").length>0)) {
-        var isCorrectSignup=logic.checkSignup(username,password,phone,address);
-        console.log('is Correct Signed UP',isCorrectSignup);
-        resp.json({msg:isCorrectSignup})
-    }else {
+      logic.checkSignup(username,password,phone,address)
+        .then((flag) => {
+          console.log('is Correct Signed UP',flag);
+          resp.json({msg:flag})
+        }).catch((err) => {
+          console.log("=== checkSignup catch err === ", err);
+        })
+    } else {
         resp.json({msg:"ERROR: EMPTY INPUT"})
         console.log("ERROR: Empty Input");
     }
@@ -68,10 +77,14 @@ router.post('/addItem',function(req,resp){
     var price=req.body.price;
     var quantity=req.body.quantity;
     if ((itemname.replace(/\s/g,"").length > 0) &&(price!=null) &&(quantity!=null)) {
-        var isItemAdded=logic.addItem(itemname,price,quantity);
-        console.log('is Item added Successfully: ',isItemAdded);
-        resp.json({msg:isItemAdded})
-    }else {
+        logic.addItem(itemname,price,quantity)
+          .then((flag) => {
+            console.log('is Item added Successfully: ',flag);
+            resp.json({msg:flag})
+          }).catch((err) => {
+            console.log("=== addItem catch err === ", err);
+          })
+    } else {
         resp.json({msg:"ERROR: EMPTY INPUT"})
         console.log("ERROR: Empty Input");
     }

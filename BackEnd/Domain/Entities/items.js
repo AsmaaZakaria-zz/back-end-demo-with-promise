@@ -3,33 +3,54 @@ var mongoose=require('mongoose');
 /*
 define properties and do validation
 */
+// original
+// function addItem(itemname,price,quantity){
+//     var itemModel= mongoose.model("items")
+//     var newItem= new itemModel();
+//     var source ;
+//     var flag = false;
+//
+//     newItem.itemname=itemname;
+//     newItem.price=price;
+//     newItem.quantity=quantity;
+//
+//     newItem.save(function(err){
+//         source=err;
+//         if(err){
+//             console.log('error',err);
+//             flag=false
+//         }else {
+//             flag=true
+//         }
+//     });
+//     while(source === undefined) {
+//         require('deasync').runLoopOnce();
+//     }
+//     return flag;
+// }
 
+//with promises
 function addItem(itemname,price,quantity){
+  return new Promise((resolve, reject) => {
     var itemModel= mongoose.model("items")
     var newItem= new itemModel();
-    var source ;
     var flag = false;
-
     newItem.itemname=itemname;
     newItem.price=price;
     newItem.quantity=quantity;
-
-    newItem.save(function(err){
-        source=err;
-        if(err){
-            console.log('error',err);
-            flag=false
-        }else {
-            flag=true
-        }
-    });
-    while(source === undefined) {
-        require('deasync').runLoopOnce();
-    }
-    return flag;
+    newItem.save()
+      .then((item) => {
+        console.log("=== addItem then === ", item);
+        flag = true;
+        return resolve(flag);
+      }).catch((err) => {
+        console.log("=== addItem catch === ", err);
+        return reject("addItem reject")
+      })
+  })
 }
 
-
+//original
 function getItems(){
     var source ;
     mongoose.model("items").find({},{},function(err,item) {
@@ -40,6 +61,17 @@ function getItems(){
     }
     return source;
 }
+
+// //with promises
+// function getItems(){
+//     mongoose.model("items").find({},{},function(err,item) {
+//         source = item;
+//     });
+//     while(source === undefined) {
+//         require('deasync').runLoopOnce();
+//     }
+//     return source;
+// }
 
 //return true if item Exist
 function isItemExist(itemname){
