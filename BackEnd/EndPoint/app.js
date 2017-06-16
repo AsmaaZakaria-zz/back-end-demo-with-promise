@@ -10,13 +10,11 @@ var users_db = require('../DataBase/MongoDB/users.js');
 
 var logic = require('../Domain/logic')
 
-//
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8090;
 var router = express.Router();
-
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,7 +22,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
 
 router.get('/', function(req, resp) {
     resp.json({ message: 'Hi From ComamosBlue' });
@@ -56,7 +53,6 @@ router.post('/signup',function(req,resp){
     var password=req.body.password;
     var phone=req.body.phone;
     var address=req.body.address;
-    // if(username==""||password==""||)
     if ((username.replace(/\s/g,"").length > 0) &&(password.replace(/\s/g,"").length>0)&&(phone!=null) &&(address.replace(/\s/g,"").length>0)) {
       logic.checkSignup(username,password,phone,address)
         .then((flag) => {
@@ -96,12 +92,16 @@ router.post('/addOrders',function(req,resp){
     var state=req.body.state;
     var itemsList=req.body.itemsList;
     console.log("itemsList",itemsList);
-
     if ((owner.replace(/\s/g,"").length > 0) &&(state.replace(/\s/g,"").length>0)&&(itemsList!=[])) {
-        var isOrderAdded=logic.addOrder(owner,state,itemsList);
-        console.log('is Order added Successfully: ',isOrderAdded);
-        resp.json({msg:isOrderAdded})
-    }else {
+        logic.addOrder(owner,state,itemsList)
+          .then((flag) => {
+            console.log("=== addOrder then === ", flag);
+            console.log('is Order added Successfully: ',flag);
+            resp.json({msg:flag})
+          }).catch((err) => {
+            console.log("=== addOrder catch errr === ", err);
+          })
+    } else {
         resp.json({msg:"ERROR: EMPTY INPUT"})
         console.log("ERROR: Empty Input");
     }
@@ -128,20 +128,6 @@ router.post('/edit',function(req,resp){
         console.log("ERROR: Empty Input");
     }
 })
-
-// Edit
-
-
-
-// router.post('/addOrderDetailes',function(req,resp){
-//     var order=req.body.order;
-//     var itemsList=req.body.itemsList;
-//     var price=req.body.price;
-//     var quantity=req.body.quantity;
-//     var isItemAdded=logic.addItem(itemId,itemname,price,quantity);
-//     console.log('is Item added Successfully: ',isItemAdded);
-//     resp.json({msg:isItemAdded})
-// })
 
 app.use('/', router);
 
